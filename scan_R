@@ -1,0 +1,181 @@
+#!/usr/bin/php
+
+<?php
+
+#> tesseract-ocr imagemagick
+
+//~ convert -crop 33%x100% +repage out.jpg out.jpg
+
+$GLOBALS['opt'] = [];
+
+if (isset($argv[1])) {
+
+  if ($argv[1] === "url"){
+   
+     echo "mode: ".$argv[1]."\n";
+   
+     $url = readline("jpg url: ");
+   
+     system("wget -A jpg,jpeg -O out.jpg $url");
+   
+     webcam();
+  
+    }
+  
+  if ($argv[1] === "screen"){
+   
+      echo "mode: ".$argv[1]."\n";
+  
+      //~ system("ffmpeg -nostats -loglevel 0 -y -f x11grab -video_size 1280x900 -i \$DISPLAY -vframes 1 out.jpg > /dev/null");
+ 
+      //~ system("convert -scale 60% +repage out.jpg out.jpg");
+      
+      //~ system("convert -crop 33%x100% +repage out.jpg out_M.jpg");
+
+    
+      $GLOBALS['opt'] = "screen";
+
+    }
+  
+  }
+
+if (!isset($argv[1])) {
+	
+	  webcam();
+	
+  }
+
+function webcam() {
+	
+  system("ffmpeg -nostats -loglevel 0 -f video4linux2 -y -i /dev/video0 -ss 0:0:2 -frames 1 out.jpg > /dev/null");
+
+  }
+
+$robot = popen("./darknet detector test cfg/voc.data cfg/tiny-yolo-voc.cfg tiny-yolo-voc.weights out_M-2.jpg -thres 0 2 > scanpop_R", "w");
+
+//~ $robot = shell_exec("./darknet detector test cfg/voc.data cfg/tiny-yolo.cfg ../yolo9000-weights/tiny-yolo-voc.weights out.jpg 2> /dev/null");
+
+//~ echo "\e[7m";
+
+//~ echo $robot;
+
+//~ echo "\e[0m";
+
+$robot = file_get_contents("scanpop_R");
+
+if (!isset($robot)) {
+
+	if (stripos($robot[0], "Predicted") !== false) {
+		
+	    echo "\n#### Idle ####";
+	
+	} 
+}
+	
+//~ print_r($robot);
+		 
+$robot = explode("\n",$robot);
+
+$robot[0] = "";
+
+$scene = count($robot) - 2;
+
+//~ echo $scene." ";
+
+
+
+$person = 0;$person++;
+
+if ($scene >= 1) {
+	
+	//~ system("espeak -p 15 -v en-us '$scene objects'");
+	
+	$job = implode("\n", $robot);
+	
+	$job = explode(": \n", $job);
+	
+	$job = implode("", $robot);
+	
+	$job = explode(": ", $job);
+
+	echo "\e[7m".$scene." ".$job[0]."\e[0m";
+	
+	$obj = $scene." ".$job[0];
+	
+	system("espeak -p 15 -v en-us '$obj on the right'");
+
+	
+	if ($job[0] === "person") {
+		
+		$job[0];
+		
+		$person++;
+		
+		echo "\n".$person;
+		
+		
+		}
+	
+	}
+	
+	
+// #############
+	
+$robot = implode("\n", $robot);	
+	
+//~ system("espeak -p 15 -v en-us '$robot'");
+
+//~ system("zenity --notification --text '$robot'");
+
+//~ system("rm out.txt && convert out.jpg out.tif");
+
+
+//~ system("tesseract out.tif out");	
+	
+//~ $opt = @$GLOBALS['opt'];
+
+//~ $opt = implode(" ",$opt);
+
+//~ $txt = preg_replace("/[^a-zA-Z0-9\s]/", "", file_get_contents("./out.txt"));
+
+//~ $txt = explode(" ",$txt);
+
+//~ $words = include_once("words.json");
+
+//~ $json = json_decode($words, true);
+
+//~ if (isset($txt)){
+
+//~ foreach ($txt as $check) {
+	
+//~ if (strlen($txt[$check]) <= 10 && strlen($txt[$check]) >= 4){
+
+      //~ echo "Key: ".$txt[$check];
+      
+      //~ if (isset($txt)){
+         
+         //~ $txt = implode("\n", $txt);
+
+       //~ }
+
+//~ echo $txt;
+
+//~ system("espeak -p 15 -v en-us '$txt'");
+//~ }
+  //~ }}
+
+// ###############
+
+print_r($opt);
+
+
+if (!isset($opt[0])){
+
+system("./scan");
+
+} else {
+	
+	popen("./scan_R $opt", "w");
+
+	
+	}

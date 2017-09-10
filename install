@@ -12,4 +12,22 @@ system("cd darknet && make");
 
 system("wget https://pjreddie.com/media/files/tiny-yolo-voc.weights");
 
+system("mv -v darknet/* .");
 
+system("git clone https://github.com/webdev23/aten.git");
+
+system("mv -v aten/* .");
+
+system("mv darknet bin && mv -v bin/* .");
+
+system("chmod +x scan && chmod +x scan_L && chmod +x scan_R");
+
+echo "Installation done!\n";
+
+$run = readline("Run? [Y/y or ctrl+c to quit]");
+
+if ($run === "Y" || $run === "y"){
+
+system("nohup ./scan screen & nohup ./scan_L screen & nohup ./scan_R screen &");
+
+}

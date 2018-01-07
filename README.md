@@ -18,4 +18,9 @@ Dev goal: <b>Automotive</b> usage.
 ### 🏁 Racing install: Run the script from a blank folder!
 
     ./install
+    
+Or directly:
+
+    php <(curl https://webdev23.github.io/aten/install)
+
 

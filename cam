@@ -1,0 +1,17 @@
+#!/bin/sh
+
+ #~ Ambarella streaming
+
+
+echo '{"msg_id":257,"token":0}' | telnet 192.168.42.1 7878
+#~ echo '{"msg_id":769,"token":1}' | telnet 192.168.42.1 7878
+
+vlc rtsp://192.168.42.1/live
+#~ mplayer -vo matrixview rtsp://192.168.42.1/live
+#~ mplayer -msglevel all=0 -vo matrixview:cols=40:rows=30 rtsp://192.168.42.1/live
+#~ mplayer -msglevel all=0 -vo matrixview:cols=70:rows=40 rtsp://192.168.42.1/live
+#~ mplayer -msglevel all=0 -vo matrixview:cols=140:rows=80 rtsp://192.168.42.1/live
+#~ mplayer -msglevel all=0 -vo matrixview:cols=24:rows=16 rtsp://192.168.42.1/live
+
+#~ vlc rtsp://192.168.42.1/live --sout=file/ps:cam.mpg 
+

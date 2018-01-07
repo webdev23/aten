@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo '{"msg_id":257,"token":0}' | telnet 192.168.42.1 7878 &
+
+termux-open-url rtsp://192.168.42.1/live

@@ -4,6 +4,10 @@
 
 #> tesseract-ocr imagemagick
 
+echo "Usage: ./scan [[url|screen|webcam|cam] [en|fr]\n";
+echo "------------------------------------------\n";
+echo "Default: webcam\n";
+
 //~ convert -crop 33%x100% +repage out.jpg out.jpg
 
 $GLOBALS['opt'] = [];
@@ -34,6 +38,23 @@ if (isset($argv[1])) {
 
     
       $GLOBALS['opt'] = "screen";
+
+    }
+    
+  if ($argv[1] === "cam"){
+   
+      echo "mode: ".$argv[1]."\n";
+  
+      //~ system("ffmpeg -nostats -loglevel 0 -y -ss 2 -i 'rtsp://192.168.42.1/live'  out.jpg > /dev/null");
+      //~ system("ffmpeg -y -i rtsp://192.168.42.1/live -f image2 -updatefirst 1 out.jpg > /dev/null");
+       system("ffmpeg -y -i rtsp://192.168.42.1/live -f image2 out.jpg > /dev/null");
+
+      //~ system("convert -scale 60% +repage out.jpg out.jpg");
+      
+      system("convert -crop 33%x100% +repage out.jpg out_M.jpg");
+
+    
+      $GLOBALS['opt'] = "cam";
 
     }
   
@@ -102,10 +123,12 @@ if ($scene >= 1) {
 	
 	$obj = $scene." ".$job[0];
 	
-	system("espeak -p 15 -v en-us '$obj'");
+	//~ system("espeak -p 15 -v en-us '$obj'");
+	system("espeak -p 15 -v fr-fr '$obj'");
 
 	
-	if ($job[0] === "person") {
+	//~ if ($job[0] === "person") {
+	if ($job[0] === "pieton") {
 		
 		$job[0];
 		
@@ -171,7 +194,7 @@ print_r($opt);
 
 if (!isset($opt[0])){
 
-system("./scan");
+ system("./scan");
 
 } else {
 	

@@ -10,7 +10,7 @@ system("git clone https://github.com/pjreddie/darknet");
 //~ system("mv -v darknet/* .");
 system("cd darknet && make");
 
-system("wget https://pjreddie.com/media/files/tiny-yolo-voc.weights");
+system("wget https://github.com/leetenki/YOLOtiny_v2_chainer/raw/master/tiny-yolo-voc.weights");
 
 system("mv -v darknet/* .");
 

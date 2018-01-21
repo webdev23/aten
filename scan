@@ -2,7 +2,7 @@
 
 <?php
 
-#> imagemagick
+#> ffmpeg imagemagick libcaca
 
 echo "Usage: ./scan [[url|screen|webcam|cam] [en|fr]\n";
 echo "------------------------------------------\n";

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+./scan screen &
+./scan_L screen &
+./scan_R screen &
+
+wait
+
+sudo killall sca*
+#~ sudo killall scan
+#~ sudo killall scan_L
+#~ sudo killall scan_R
+
+./start
